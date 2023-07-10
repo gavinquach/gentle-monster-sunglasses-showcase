@@ -8,15 +8,15 @@ import {
     Preload,
 } from "@react-three/drei";
 import { gsap } from "gsap";
-import RotationArrow from "./components/RotationArrow/RotationArrow";
 
-const SwitchArrows = lazy(() =>
-    import("./components/SwitchArrows/SwitchArrows")
-);
 const Cylinder = lazy(() => import("./components/Cylinder"));
 const CatEyeSunglasses = lazy(() => import("./components/CatEyeSunglasses"));
 const CazalSunglasses = lazy(() => import("./components/CazalSunglasses"));
 const WhiteSunglasses = lazy(() => import("./components/WhiteSunglasses"));
+const RotationArrow = lazy(() => import("./components/RotationArrow/RotationArrow"));
+const SwitchArrows = lazy(() =>
+    import("./components/SwitchArrows/SwitchArrows")
+);
 
 export default function App() {
     const groupRef = useRef();
