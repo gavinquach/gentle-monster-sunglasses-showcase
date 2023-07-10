@@ -21,6 +21,7 @@ const RotationArrow = lazy(() =>
 const SwitchArrows = lazy(() =>
     import("./components/SwitchArrows/SwitchArrows")
 );
+const VideoPlayer = lazy(() => import("./components/VideoPlayer"));
 
 export default function App() {
     const groupRef = useRef();
@@ -169,6 +170,7 @@ export default function App() {
                     minDistance={0.5}
                     maxDistance={2.7}
                 />
+
                 <group ref={groupRef}>
                     <group name="sunglasses">
                         <Float
@@ -238,6 +240,8 @@ export default function App() {
                         />
                     </group>
                 </group>
+
+                <VideoPlayer />
                 <Preload all />
             </Canvas>
         </Suspense>
