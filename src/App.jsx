@@ -139,7 +139,7 @@ export default function App() {
                 <Sky sunPosition={[100, 75, 100]} />
                 <directionalLight castShadow position={[100, 75, 100]} />
                 <ambientLight intensity={0.3} />
-                <Environment preset="sunset" />
+                <Environment files={"/umhlanga_sunrise_2k.hdr"} />
 
                 <OrbitControls
                     makeDefault
