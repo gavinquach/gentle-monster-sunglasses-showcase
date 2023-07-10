@@ -4,16 +4,20 @@ import {
     OrbitControls,
     Float,
     Environment,
-    Sky,
     Preload,
+    Stars,
 } from "@react-three/drei";
 import { gsap } from "gsap";
+// import { BackSide } from "three";
 
-const Cylinder = lazy(() => import("./components/Cylinder"));
+// const Cylinder = lazy(() => import("./components/Cylinder"));
 const CatEyeSunglasses = lazy(() => import("./components/CatEyeSunglasses"));
 const CazalSunglasses = lazy(() => import("./components/CazalSunglasses"));
 const WhiteSunglasses = lazy(() => import("./components/WhiteSunglasses"));
-const RotationArrow = lazy(() => import("./components/RotationArrow/RotationArrow"));
+const SpinningGalaxy = lazy(() => import("./components/SpinningGalaxy"));
+const RotationArrow = lazy(() =>
+    import("./components/RotationArrow/RotationArrow")
+);
 const SwitchArrows = lazy(() =>
     import("./components/SwitchArrows/SwitchArrows")
 );
@@ -133,13 +137,26 @@ export default function App() {
             <Canvas
                 shadows="accumulative"
                 dpr={[1, 1.5]}
-                camera={{ position: [0, 3, 4], fov: 30 }}
+                camera={{ position: [0, 3, 4], fov: 30, near: 0.01, far: 200 }}
             >
-                <color attach="background" args={["#e3f4ff"]} />
-                <Sky sunPosition={[100, 75, 100]} />
-                <directionalLight castShadow position={[100, 75, 100]} />
-                <ambientLight intensity={0.3} />
+                <color attach="background" args={["#0b0b0b"]} />
                 <Environment files={"/umhlanga_sunrise_2k.hdr"} />
+                <Stars
+                    radius={50}
+                    depth={50}
+                    count={5000}
+                    factor={4}
+                    saturation={0}
+                    fade
+                    speed={1}
+                />
+
+                <directionalLight
+                    castShadow
+                    position={[100, 75, 100]}
+                    shadow-normalBias={0.04}
+                />
+                <ambientLight intensity={0.3} />
 
                 <OrbitControls
                     makeDefault
@@ -162,6 +179,22 @@ export default function App() {
                         >
                             <CatEyeSunglasses ref={glasses1} />
                         </Float>
+
+                        {/* White glass box for black-frame glasses on black background */}
+                        {/* <mesh position={[0, 2.551, -0.4]}>
+                            <boxGeometry args={[1.55, 1.3, 1.7]} />
+                            <meshPhysicalMaterial
+                                roughness={0}
+                                metalness={0.4}
+                                transmission={1}
+                                transparent
+                                opacity={0.7}
+                                color={"#000"}
+                                envMapIntensity={0.3}
+                                side={BackSide}
+                            />
+                        </mesh> */}
+
                         <Float
                             position={[3, 2.5, 0]}
                             speed={2.5}
@@ -179,16 +212,32 @@ export default function App() {
                             <WhiteSunglasses ref={glasses3} />
                         </Float>
                     </group>
-                    <group name="cylinders">
-                        <Cylinder color="#eeff00" />
-                        <Cylinder color="#8eeeff" position={[3, 0, 0]} />
-                        <Cylinder color="#ff9191" position={[6, 0, 0]} />
+                    {/* <group name="cylinders">
+                        <Cylinder />
+                        <Cylinder position={[3, 0, 0]} />
+                        <Cylinder position={[6, 0, 0]} />
+                    </group> */}
+                    <group name="galaxies">
+                        <SpinningGalaxy
+                            position={[0, 1.75, 0]}
+                            scale={[0.5, 0.5, 0.5]}
+                            innerColor={"#9948DD"}
+                            outerColor={"#1C3277"}
+                        />
+                        <SpinningGalaxy
+                            position={[3, 1.75, 0]}
+                            scale={[0.5, 0.5, 0.5]}
+                            innerColor={"#1db61f"}
+                            outerColor={"#847b1b"}
+                        />
+                        <SpinningGalaxy
+                            position={[6, 1.75, 0]}
+                            scale={[0.5, 0.5, 0.5]}
+                            innerColor={"#ff2020"}
+                            outerColor={"#2877ff"}
+                        />
                     </group>
                 </group>
-                <mesh rotation={[-Math.PI * 0.5, 0, 0]}>
-                    <planeGeometry args={[100, 100]} />
-                    <meshStandardMaterial color="#e3f4ff" />
-                </mesh>
                 <Preload all />
             </Canvas>
         </Suspense>
