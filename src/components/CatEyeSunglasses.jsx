@@ -27,7 +27,9 @@ const CatEyeSunglasses = forwardRef((props, ref) => {
           receiveShadow
           geometry={nodes.Object_3.geometry}
           material={materials.phong1SG}
-        />
+        >
+          <meshPhongMaterial color="#9c0000" />
+        </mesh>
       </group>
     </group>
   );
