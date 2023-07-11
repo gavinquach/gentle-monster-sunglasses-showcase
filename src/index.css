@@ -28,6 +28,5 @@ body,
     user-select: none;
     overflow: hidden;
     border: none;
-    background: #000;
-    padding: 0;
+    background: none;
 }

@@ -11,7 +11,7 @@ export default function VideoPlayer(props) {
                         className="videoPlayer"
                         prepend
                         transform
-                        occlude="blending"
+                        // occlude="blending"
                     >
                         <iframe
                             width={640}
@@ -31,7 +31,7 @@ export default function VideoPlayer(props) {
                         className="videoPlayer"
                         prepend
                         transform
-                        occlude="blending"
+                        // occlude="blending"
                     >
                         <iframe
                             width={640}
