@@ -1,17 +1,16 @@
-import { Billboard, Html } from "@react-three/drei";
+import { Html } from "@react-three/drei";
 
 // TODO fix occlude="blending" making other HTML elements disappear
 export default function VideoPlayer(props) {
     return (
         <group {...props} dispose={null}>
-            <group position={[-2, 3, -7]} scale={0.2}>
-                <Billboard>
+            <group position={[-1, 3.8, -1]} scale={0.07}>
                     <Html
                         name="YoutubeVideo1"
                         className="videoPlayer"
-                        prepend
                         transform
                         // occlude="blending"
+                        geometry={<planeGeometry args={[16, 9]} />}
                     >
                         <iframe
                             width={640}
@@ -21,17 +20,15 @@ export default function VideoPlayer(props) {
                             frameborder="0"
                         />
                     </Html>
-                </Billboard>
             </group>
 
-            <group position={[2, 3, -7]} scale={0.2}>
-                <Billboard>
+            <group position={[1, 3.8, -1]} scale={0.07}>
                     <Html
                         name="YoutubeVideo2"
                         className="videoPlayer"
-                        prepend
                         transform
                         // occlude="blending"
+                        geometry={<planeGeometry args={[16, 9]} />}
                     >
                         <iframe
                             width={640}
@@ -41,7 +38,6 @@ export default function VideoPlayer(props) {
                             frameborder="0"
                         />
                     </Html>
-                </Billboard>
             </group>
         </group>
     );

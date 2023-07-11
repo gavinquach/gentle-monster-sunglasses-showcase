@@ -10,11 +10,12 @@ import {
 import { gsap } from "gsap";
 // import { BackSide } from "three";
 
-import Lamp from "./components/Lamp.jsx";
-// const Cylinder = lazy(() => import("./components/Cylinder"));
 const CatEyeSunglasses = lazy(() => import("./components/CatEyeSunglasses"));
 const CazalSunglasses = lazy(() => import("./components/CazalSunglasses"));
 const WhiteSunglasses = lazy(() => import("./components/WhiteSunglasses"));
+
+// const Cylinder = lazy(() => import("./components/Cylinder"));
+const Lamp = lazy(() => import("./components/Lamp.jsx"));
 const SpinningGalaxy = lazy(() => import("./components/SpinningGalaxy"));
 const RotationArrow = lazy(() =>
     import("./components/RotationArrow/RotationArrow")
@@ -249,7 +250,6 @@ export default function App() {
                         />
                     </group>
                 </group>
-
 
                 <VideoPlayer />
                 <Preload all />
