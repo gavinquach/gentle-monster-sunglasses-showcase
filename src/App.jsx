@@ -10,6 +10,7 @@ import {
 import { gsap } from "gsap";
 // import { BackSide } from "three";
 
+import Lamp from "./components/Lamp.jsx";
 // const Cylinder = lazy(() => import("./components/Cylinder"));
 const CatEyeSunglasses = lazy(() => import("./components/CatEyeSunglasses"));
 const CazalSunglasses = lazy(() => import("./components/CazalSunglasses"));
@@ -182,21 +183,6 @@ export default function App() {
                             <CatEyeSunglasses ref={glasses1} />
                         </Float>
 
-                        {/* White glass box for black-frame glasses on black background */}
-                        {/* <mesh position={[0, 2.551, -0.4]}>
-                            <boxGeometry args={[1.55, 1.3, 1.7]} />
-                            <meshPhysicalMaterial
-                                roughness={0}
-                                metalness={0.4}
-                                transmission={1}
-                                transparent
-                                opacity={0.7}
-                                color={"#000"}
-                                envMapIntensity={0.3}
-                                side={BackSide}
-                            />
-                        </mesh> */}
-
                         <Float
                             position={[3, 2.5, 0]}
                             speed={2.5}
@@ -239,7 +225,31 @@ export default function App() {
                             outerColor={"#2877ff"}
                         />
                     </group>
+                    <group name="lamps">
+                        <Lamp
+                            angle={0.32}
+                            distance={5}
+                            attenuation={5}
+                            anglePower={5}
+                            position={[0, 5, 0]}
+                        />
+                        <Lamp
+                            angle={0.32}
+                            distance={5}
+                            attenuation={5}
+                            anglePower={5}
+                            position={[3, 5, 0]}
+                        />
+                        <Lamp
+                            angle={0.32}
+                            distance={5}
+                            attenuation={5}
+                            anglePower={5}
+                            position={[6, 5, 0]}
+                        />
+                    </group>
                 </group>
+
 
                 <VideoPlayer />
                 <Preload all />
