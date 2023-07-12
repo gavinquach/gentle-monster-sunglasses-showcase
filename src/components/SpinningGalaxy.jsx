@@ -168,17 +168,19 @@ export default function SpinningGalaxy({ innerColor, outerColor, ...props }) {
 
     return (
         <group ref={galaxyRef} {...props} dispose={null}>
-            <points
-                geometry={galaxyObject.innerGeometry}
-                material={galaxyObject.particleMaterialInner}
-                dispose={null}
-            />
-            <points
-                geometry={galaxyObject.outerGeometry}
-                material={galaxyObject.particleMaterialOuter}
-                rotation={[Math.PI * 0.04, 0, 0]}
-                dispose={null}
-            />
+            <group scale={0.5}>
+                <points
+                    geometry={galaxyObject.innerGeometry}
+                    material={galaxyObject.particleMaterialInner}
+                    dispose={null}
+                />
+                <points
+                    geometry={galaxyObject.outerGeometry}
+                    material={galaxyObject.particleMaterialOuter}
+                    rotation={[Math.PI * 0.04, 0, 0]}
+                    dispose={null}
+                />
+            </group>
         </group>
     );
 }

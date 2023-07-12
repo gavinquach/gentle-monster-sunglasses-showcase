@@ -1,62 +1,60 @@
 import { lazy, Suspense, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
-import {
-    OrbitControls,
-    Float,
-    Environment,
-    Preload,
-    Stars,
-} from "@react-three/drei";
+import { OrbitControls, Environment, Preload, Stars } from "@react-three/drei";
 import { gsap } from "gsap";
-// import { BackSide } from "three";
+import { DEG2RAD } from "three/src/math/MathUtils";
 
-const CatEyeSunglasses = lazy(() => import("./components/CatEyeSunglasses"));
-const CazalSunglasses = lazy(() => import("./components/CazalSunglasses"));
-const WhiteSunglasses = lazy(() => import("./components/WhiteSunglasses"));
+import { video1, video2 } from "./videos";
 
-// const Cylinder = lazy(() => import("./components/Cylinder"));
-const Lamp = lazy(() => import("./components/Lamp.jsx"));
-const SpinningGalaxy = lazy(() => import("./components/SpinningGalaxy"));
+// HTML elements
 const RotationArrow = lazy(() =>
     import("./components/RotationArrow/RotationArrow")
 );
 const SwitchArrows = lazy(() =>
     import("./components/SwitchArrows/SwitchArrows")
 );
-const VideoPlayer = lazy(() => import("./components/VideoPlayer"));
+
+// Sunglasses
+const CazalSunglasses = lazy(() =>
+    import("./components/Models/CazalSunglasses")
+);
+const PinkSunglasses = lazy(() => import("./components/Models/PinkSunglasses"));
+const YellowSunglasses = lazy(() =>
+    import("./components/Models/YellowSunglasses")
+);
+const WhiteSunglasses = lazy(() =>
+    import("./components/Models/WhiteSunglasses")
+);
+
+// Showcase wrapper for sunglasses
+const ShowcaseWrapper = lazy(() => import("./components/ShowcaseWrapper"));
+
+// Video players
+const Screen = lazy(() => import("./components/VideoPlayer/Screen"));
+// const VideoPlayer = lazy(() => import("./components/VideoPlayer"));
 
 export default function App() {
     const groupRef = useRef();
     const playingAnimation = useRef(false);
     const viewingNumber = useRef(0);
-
-    const glasses1 = useRef();
-    const glasses2 = useRef();
-    const glasses3 = useRef();
+    const glassesRefs = useRef([]);
 
     const resetRotation = () => {
-        gsap.to(glasses1.current.rotation, {
-            duration: 1,
-            y: 0,
-            ease: "power2.inOut",
-        });
-        gsap.to(glasses2.current.rotation, {
-            duration: 1,
-            y: 0,
-            ease: "power2.inOut",
-        });
-        gsap.to(glasses3.current.rotation, {
-            duration: 1,
-            y: 0,
-            ease: "power2.inOut",
+        glassesRefs.current.forEach((ref) => {
+            gsap.to(ref.rotation, {
+                duration: 1,
+                y: 0,
+                ease: "power2.inOut",
+            });
         });
     };
 
     const prepareAnimation = (direction) => {
+        if (playingAnimation.current) return false;
         if (direction === "left") {
-            if (playingAnimation.current || viewingNumber.current === 0) return false;
+            if (viewingNumber.current === 0) return false;
         } else {
-            if (playingAnimation.current || viewingNumber.current === 2) return false;
+            if (viewingNumber.current === glassesRefs.current.length) return false;
         }
 
         // set playing animation to true
@@ -101,34 +99,17 @@ export default function App() {
 
         playingAnimation.current = true;
 
-        if (viewingNumber.current === 0) {
-            gsap.to(glasses1.current.rotation, {
-                duration: 1,
-                y: glasses1.current.rotation.y === 0 ? Math.PI : 0,
-                ease: "power2.inOut",
-                onComplete: () => {
-                    playingAnimation.current = false;
-                },
-            });
-        } else if (viewingNumber.current === 1) {
-            gsap.to(glasses2.current.rotation, {
-                duration: 1,
-                y: glasses2.current.rotation.y === 0 ? Math.PI : 0,
-                ease: "power2.inOut",
-                onComplete: () => {
-                    playingAnimation.current = false;
-                },
-            });
-        } else if (viewingNumber.current === 2) {
-            gsap.to(glasses3.current.rotation, {
-                duration: 1,
-                y: glasses3.current.rotation.y === 0 ? Math.PI : 0,
-                ease: "power2.inOut",
-                onComplete: () => {
-                    playingAnimation.current = false;
-                },
-            });
-        }
+        gsap.to(glassesRefs.current[viewingNumber.current].rotation, {
+            duration: 1,
+            y:
+                glassesRefs.current[viewingNumber.current].rotation.y === 0
+                    ? Math.PI
+                    : 0,
+            ease: "power2.inOut",
+            onComplete: () => {
+                playingAnimation.current = false;
+            },
+        });
     };
 
     return (
@@ -166,7 +147,7 @@ export default function App() {
                     target={[0, 2.5, 0]}
                     enablePan={false}
                     minPolarAngle={Math.PI * 0.1}
-                    maxPolarAngle={Math.PI / 1.5}
+                    maxPolarAngle={Math.PI / 1.4}
                     minAzimuthAngle={-Math.PI / 4}
                     maxAzimuthAngle={Math.PI / 4}
                     minDistance={0.5}
@@ -175,83 +156,31 @@ export default function App() {
 
                 <group ref={groupRef}>
                     <group name="sunglasses">
-                        <Float
-                            position={[0, 2.5, 0]}
-                            speed={2.5}
-                            floatIntensity={2}
-                            floatingRange={[-0.05, 0.05]}
-                        >
-                            <CatEyeSunglasses ref={glasses1} />
-                        </Float>
-
-                        <Float
-                            position={[3, 2.5, 0]}
-                            speed={2.5}
-                            floatIntensity={2}
-                            floatingRange={[-0.05, 0.05]}
-                        >
-                            <CazalSunglasses ref={glasses2} />
-                        </Float>
-                        <Float
-                            position={[6, 2.5, 0]}
-                            speed={2.5}
-                            floatIntensity={2}
-                            floatingRange={[-0.05, 0.05]}
-                        >
-                            <WhiteSunglasses ref={glasses3} />
-                        </Float>
-                    </group>
-                    {/* <group name="cylinders">
-                        <Cylinder />
-                        <Cylinder position={[3, 0, 0]} />
-                        <Cylinder position={[6, 0, 0]} />
-                    </group> */}
-                    <group name="galaxies">
-                        <SpinningGalaxy
-                            position={[0, 1.75, 0]}
-                            scale={[0.5, 0.5, 0.5]}
-                            innerColor={"#9948DD"}
-                            outerColor={"#1C3277"}
-                        />
-                        <SpinningGalaxy
-                            position={[3, 1.75, 0]}
-                            scale={[0.5, 0.5, 0.5]}
-                            innerColor={"#1db61f"}
-                            outerColor={"#847b1b"}
-                        />
-                        <SpinningGalaxy
-                            position={[6, 1.75, 0]}
-                            scale={[0.5, 0.5, 0.5]}
-                            innerColor={"#ff2020"}
-                            outerColor={"#2877ff"}
-                        />
-                    </group>
-                    <group name="lamps">
-                        <Lamp
-                            angle={0.32}
-                            distance={5}
-                            attenuation={5}
-                            anglePower={5}
-                            position={[0, 5, 0]}
-                        />
-                        <Lamp
-                            angle={0.32}
-                            distance={5}
-                            attenuation={5}
-                            anglePower={5}
-                            position={[3, 5, 0]}
-                        />
-                        <Lamp
-                            angle={0.32}
-                            distance={5}
-                            attenuation={5}
-                            anglePower={5}
-                            position={[6, 5, 0]}
-                        />
+                        <ShowcaseWrapper innerColor="#9948DD" outerColor="#1C3277">
+                            <CazalSunglasses ref={(el) => (glassesRefs.current[0] = el)} />
+                        </ShowcaseWrapper>
+                        <ShowcaseWrapper x={3} innerColor="#1b8427" outerColor="#a21db6">
+                            <PinkSunglasses ref={(el) => (glassesRefs.current[1] = el)} />
+                        </ShowcaseWrapper>
+                        <ShowcaseWrapper x={6} innerColor="#1db61f" outerColor="#847b1b">
+                            <YellowSunglasses ref={(el) => (glassesRefs.current[2] = el)} />
+                        </ShowcaseWrapper>
+                        <ShowcaseWrapper x={9} innerColor="#ff2020" outerColor="#2877ff">
+                            <WhiteSunglasses ref={(el) => (glassesRefs.current[3] = el)} />
+                        </ShowcaseWrapper>
                     </group>
                 </group>
 
-                <VideoPlayer />
+                <group position={[0, 2, -3]} rotation={[0, Math.PI, 0]}>
+                    <group rotation-y={DEG2RAD * 40}>
+                        <Screen src={video1} />
+                    </group>
+                    <group rotation-y={DEG2RAD * -40}>
+                        <Screen src={video2} />
+                    </group>
+                </group>
+
+                {/* <VideoPlayer /> */}
                 <Preload all />
             </Canvas>
         </Suspense>

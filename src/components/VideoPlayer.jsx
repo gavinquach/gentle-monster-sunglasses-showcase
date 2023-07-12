@@ -9,7 +9,7 @@ export default function VideoPlayer(props) {
                         name="YoutubeVideo1"
                         className="videoPlayer"
                         transform
-                        // occlude="blending"
+                        occlude="blending"
                         geometry={<planeGeometry args={[16, 9]} />}
                     >
                         <iframe
@@ -27,7 +27,7 @@ export default function VideoPlayer(props) {
                         name="YoutubeVideo2"
                         className="videoPlayer"
                         transform
-                        // occlude="blending"
+                        occlude="blending"
                         geometry={<planeGeometry args={[16, 9]} />}
                     >
                         <iframe

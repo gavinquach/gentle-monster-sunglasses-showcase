@@ -1,7 +1,7 @@
 import { useTexture } from "@react-three/drei";
 
 export default function Cylinder({ ...props }) {
-    const height = 1.9;
+    const height = 1.7;
     const galaxyMap = useTexture("/milky-way-g8b1427ee1_1920.jpg");
 
     return (
