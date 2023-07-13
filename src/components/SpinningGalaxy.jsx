@@ -9,9 +9,11 @@ import {
     PointsMaterial,
 } from "three";
 
+import galaxyparticles from "../images/galaxyparticles.png";
+
 export default function SpinningGalaxy({ innerColor, outerColor, ...props }) {
     const galaxyRef = useRef();
-    const galaxyParticleImg = useTexture("/galaxyparticles.png");
+    const galaxyParticleImg = useTexture(galaxyparticles);
 
     const galaxyObject = {
         innerGeometry: null,
