@@ -134,7 +134,7 @@ export default function App() {
                     </group>
                 </group>
 
-                <group position={[0, 1, -2]} rotation={[0, Math.PI, 0]} scale={2.2}>
+                <group position={[0, 1, -2]} rotation={[0, Math.PI, 0]} scale={1.8}>
                     <Screen src={video} />
                 </group>
 
