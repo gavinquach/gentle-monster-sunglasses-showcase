@@ -1,3 +1,4 @@
+import { useTexture } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import {
@@ -10,6 +11,7 @@ import {
 
 export default function SpinningGalaxy({ innerColor, outerColor, ...props }) {
     const galaxyRef = useRef();
+    const galaxyParticleImg = useTexture("/galaxyparticles.png");
 
     const galaxyObject = {
         innerGeometry: null,
@@ -30,7 +32,6 @@ export default function SpinningGalaxy({ innerColor, outerColor, ...props }) {
 
     const particleParams = {
         count: 50000,
-        size: 0.03,
         radius: 2,
         branches: 5,
         spin: 3,
@@ -43,22 +44,23 @@ export default function SpinningGalaxy({ innerColor, outerColor, ...props }) {
 
     // Particle materials
     galaxyObject.particleMaterialInner = new PointsMaterial({
-        size: particleParams.size,
+        size: 0.03,
         sizeAttenuation: true,
-        depthWrite: false,
         blending: AdditiveBlending,
         vertexColors: true,
         transparent: true,
-        opacity: 0.4,
+        opacity: 0.6,
     });
     galaxyObject.particleMaterialOuter = new PointsMaterial({
-        size: particleParams.size,
+        size: 0.1,
         sizeAttenuation: true,
-        depthWrite: true,
+        depthWrite: false,
+        depthTest: false,
         blending: AdditiveBlending,
         vertexColors: true,
         transparent: true,
-        opacity: 0.4,
+        opacity: 1,
+        map: galaxyParticleImg
     });
 
     // Create particle data
