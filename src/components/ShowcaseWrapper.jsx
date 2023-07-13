@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import { Float, Sparkles } from "@react-three/drei";
+import { Float } from "@react-three/drei";
 
 const Cylinder = lazy(() => import("./Cylinder"));
 const SpinningGalaxy = lazy(() => import("./SpinningGalaxy"));
